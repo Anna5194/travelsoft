@@ -1,0 +1,955 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+@font-face {
+    font-family: 'CarloMelowSans'; /* Название, которое вы будете использовать для шрифта */
+    src: url('/fonts/Carlo\ Melow.ttf') format('truetype');
+    font-weight: normal; /* Укажите вес шрифта (normal, bold и т.д.) */
+    font-style: normal; /* Укажите стиль (normal, italic) */
+}
+
+@font-face {
+    font-family: 'BlushesBlack'; /* Название, которое вы будете использовать для шрифта */
+    src: url('/fonts/Blushes\ Black.ttf') format('truetype');
+    font-weight: normal; /* Укажите вес шрифта (normal, bold и т.д.) */
+    font-style: normal; /* Укажите стиль (normal, italic) */
+}
+
+@font-face {
+    font-family: 'BoldRegular'; /* Произвольное название шрифта */
+    src: url('fonts/XPLOR_Bold-Regular.otf') format('opentype');
+    font-weight: normal; /* Укажите нужную насыщенность */
+    font-style: normal; /* Обычный или курсив */
+}
+
+@font-face {
+    font-family: 'SitDownRoundBold'; /* Произвольное название шрифта */
+    src: url('fonts/SitDownRound-Bold.ttf') format('opentype');
+    font-weight: normal; /* Укажите нужную насыщенность */
+    font-style: normal; /* Обычный или курсив */
+}
+
+@font-face {
+    font-family: 'Letmeshowyou'; /* Произвольное название шрифта */
+    src: url('fonts/Letmeshowyou_font.otf') format('opentype');
+    font-weight: normal; /* Укажите нужную насыщенность */
+    font-style: normal; /* Обычный или курсив */
+}
+
+h1{
+    font-family: 'BoldRegular';
+    color:#3b1faa;
+    font-size: 70px;
+    text-align: center;
+}
+
+h3{
+    font-family: 'BoldRegular';
+    color:#3b1faa;
+}
+
+
+
+
+.head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #3b1faa;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 1001;
+}
+
+.icons {
+    display: flex;
+}
+
+.logo {
+    font-family: 'CarloMelowSans', sans-serif;
+    font-size: 50px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.soft {
+    color: rgb(231, 190, 142);
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    flex-grow: 1; /* Добавьте это свойство */
+    max-width: calc(100% - 100px); /* Ограничиваем ширину, чтобы не заезжало на другие элементы */
+    margin-right: 20px; /* Отступ от кнопки меню */
+}
+
+.search-input {
+    right: 0; /* Выравниваем по правому краю */
+    width: 100%; /* Занимает всю ширину контейнера */
+    background-color:#3b1faa;
+    height: 100%;
+    padding: 0;
+    border: none;
+    color: white;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    transform: translateX(100%); /* Начинаем справа за пределами контейнера */
+    opacity: 0;
+    border-radius: 20px 0 0 20px;
+    box-sizing: border-box; /* Важно для правильного расчёта ширины */
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(199, 237, 255, 0.231);
+}
+
+.search-input.active {
+    width: 100%;
+    padding: 0 15px;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.search{
+    position: relative; /* Для z-index */
+    z-index: 1; /* Чтобы иконка была над полем ввода */
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    margin-left: auto; /* Выравниваем по правому краю */
+}
+.menu-btn {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.search:hover, .menu-btn:hover {
+    background-color: rgba(199, 237, 255, 0.231);
+}
+.search.active{
+    background-color: rgba(199, 237, 255, 0.231) !important;
+    border-radius: 0 10px 10px 0;
+}
+
+.menu-btn.active {
+    background-color: rgba(199, 237, 255, 0.231) !important;
+}
+
+/* Меню */
+.menu-overlay {
+    position: fixed;
+    top: 80px; /* Отступ под header */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    z-index: 1000;
+    display: none;
+}
+
+.menu-container {
+    position: fixed;
+    top: 80px; /* Отступ под header */
+    right: 0;
+    width: 50%; /* 1/2 экрана */
+    height: calc(100% - 80px);
+    background-color: #5739d1;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.menu-container::-webkit-scrollbar {
+  width: 0;
+}
+
+.menu-overlay.active .menu-container {
+    transform: translateX(0);
+}
+
+.menu-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+.menu-level-1 {
+    list-style: none;
+    padding: 30px;
+    margin: 0;
+    text-align: right; /* Текст по правой стороне */
+}
+
+.menu-level-1 > li {
+    font-family: 'SitDownRoundBold';
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    position: relative;
+    cursor: pointer;
+    max-width: 40%; /* Уменьшаем ширину текста */
+    margin-left: auto; /* Выравниваем по правому краю */
+}
+
+.menu-level-1 > li:hover {
+    color: rgb(231, 190, 142);
+}
+
+.arrow {
+    color: white;
+    float: left; /* Стрелка слева */
+    margin-right: 10px;
+}
+
+.has-submenu:hover .arrow {
+    color: rgb(231, 190, 142);
+}
+
+.menu-level-2 {
+    padding: 15px 20px;
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    right: 100%; /* Вторая ступень слева от меню */
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: right; /* Текст по правой стороне */
+}
+
+.has-submenu:hover .menu-level-2 {
+    display: block;
+}
+
+.menu-level-2 li {
+    padding: 12px 0;
+    font-size: 16px;
+    color: white;
+    margin-left: auto; /* Выравниваем по правому краю */
+    padding: 15px 40px;
+    border-radius: 10px;
+}
+
+.menu-level-2 li:hover {
+    color: rgb(231, 190, 142);
+}
+
+
+
+/*баннер*/
+
+.banner{
+    background-image: url("/images/2008821.jpg");
+    display: flex;
+    height: 350px;
+    padding: 80px 0 0 0;
+    justify-content: space-around;
+    align-items: center;
+}
+.banner h1{
+    color: white;
+    font-family: "BlushesBlack";
+    font-size: 40px;
+}
+.banner>.logo{
+    font-size: 80px;
+}
+
+
+
+
+
+/*блог*/
+
+.blog {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background: linear-gradient(180deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(59, 31, 170, 1) 100%);
+}
+
+.blog h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.allnews {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.news {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: white;
+}
+
+.photo {
+    position: relative;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.photo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(59,31,170,0.7);
+}
+
+.photo h1 {
+    font-family: "BlushesBlack";
+    position: relative;
+    color: white;
+    font-size: 25px;
+    line-height: 1.4;
+    margin: 0;
+    z-index: 1;
+}
+
+.content {
+    font-family: 'Arial';
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content p {
+    margin: 0 0 15px 0;
+    line-height: 1.5;
+}
+
+.content a {
+    font-family: 'BlushesBlack';
+    color: #0066cc;
+    text-decoration: none;
+    margin-top: auto;
+    text-align: center;
+}
+
+.news:nth-child(1) .photo {
+    background-image: url("/images/imgnews1.png");
+}
+.news:nth-child(2) .photo {
+    background-image: url("/images/imgnews2.png");
+}
+.news:nth-child(3) .photo {
+    background-image: url("/images/imgnews3.png");
+}
+
+@media (max-width: 900px) {
+    .allnews {
+        grid-template-columns: 1fr;
+    }
+}
+
+.button{
+    color: white;
+    text-decoration: none;
+    font-family: "BlushesBlack";
+    font-size: 25px;
+    margin-top: 40px;
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 10px;
+    grid-column: 1 / -1; 
+    justify-self: center;
+    transition: background-color 0.3s;
+}
+
+.button:hover{
+    background-color:rgba(240, 248, 255, 0.203);
+}
+.button:active{
+    color:rgb(231, 190, 142);
+}
+
+
+
+
+/*портфолио*/
+
+.portfolio{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.portfolio-items{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.portfoliocard{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.portfoliocard>h3{
+    font-family: "BlushesBlack";
+    color:#3b1faa;
+    font-size: 30px;
+    text-align: center;
+}
+.portfolio-container {
+    position: relative;
+}
+.portfolio-overlay{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(180deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 40%, rgba(59, 31, 170, 1) 100%);
+}
+
+.portfolio-container>.button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #3b1faa00;
+    color: white;
+    border: none;
+    cursor: pointer;
+    z-index: 2; /* чтобы кнопка была поверх градиента */
+    font-family: inherit;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    font-family: "BlushesBlack";
+    font-size: 25px;
+    margin-top: 40px;
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 10px;
+    grid-column: 1 / -1; 
+    justify-self: center;
+}
+
+.portfolio-container>.button:hover {
+    background-color:rgba(240, 248, 255, 0.203);
+}
+
+.portfolio-container>.button:active{
+    color:rgb(231, 190, 142);
+}
+
+
+
+
+
+/*о нас*/
+
+.aboutUs {
+    font-family: "BlushesBlack";
+    color: #3b1faa;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Отступ между карточками */
+}
+.aboutUs>h1{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.aboutUs>h3{
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.containercard {
+    display: flex;
+    width: 700px;
+    border: #3b1faa 5px solid;
+    border-radius: 100px;
+    position: relative;
+    padding: 0 50px;
+    margin: 20px 0;
+}
+
+/* Для нечётных (левых) цифр */
+.containercard.odd {
+    padding-left: 100px;
+}
+.containercard.odd .num-container {
+    left: -40px;
+    right: auto;
+}
+
+/* Для чётных (правых) цифр */
+.containercard.even {
+    padding-right: 100px;
+    margin-left: auto; /* Выравниваем карточку по правому краю */
+}
+.containercard.even .num-container {
+    right: -40px;
+    left: auto;
+}
+
+.num-container {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+.num {
+    font-family: 'BoldRegular';
+    font-size: 100px;
+    border: #3b1faa 5px solid;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 50%;
+    width: 130px;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.content {
+    font-family: "BlushesBlack";
+    color: #3b1faa;
+}
+
+.content>h4 {
+    font-family: "BoldRegular";
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+
+
+
+
+/*услуги*/
+
+.services {
+    background-color: rgb(255, 218, 176);
+    font-family: "BlushesBlack";
+    color: #3b1faa;
+    padding: 20px;
+}
+
+.services-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.service-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.speech-bubble {
+    position: absolute;
+    background-color: white;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
+
+.speech-bubble:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+}
+
+.bubble-top-right {
+    top: -100px;
+    right: -50px;
+}
+
+.bubble-top-right:after {
+    bottom: -15px;
+    left: 30px;
+    border-top-color: white;
+    border-bottom: 0;
+}
+
+.bubble-bottom-left {
+    bottom: -100px;
+    left: -50px;
+}
+
+.bubble-bottom-left:after {
+    top: -13px;
+    right: 30px;
+    border-bottom-color: white;
+    border-top: 0;
+}
+
+.bubble-top-left {
+    top: -100px;
+    left: -50px;
+}
+
+.bubble-top-left:after {
+    bottom: -15px;
+    right: 30px;
+    border-top-color: white;
+    border-bottom: 0;
+}
+
+.service-item img {
+    width: 100px;
+    height: auto;
+    z-index: 2;
+    padding: 70px 120px;
+}
+
+
+
+
+
+/*туристические услуги*/
+
+.tourhelp {
+    padding: 200px 0 50px 0;
+    background-color: rgb(255, 236, 214);
+    font-family: "BlushesBlack";
+    color:#3b1faa;
+}
+
+.tourhelp>div>div>img {
+    width: 120px;
+    height: 120px;
+    padding: 20px 20px 0 20px;
+}
+
+.tourhelp>div>div>.card-text{
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.circle-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    gap: 20px 50px;
+}
+
+.tourhelpcard1,.tourhelpcard2,.tourhelpcard3,.tourhelpcard4,.tourhelpcard5,.tourhelpcard6{
+    display: flex;
+    margin: 0 10px;
+}
+
+.tourhelpcard1{grid-area: 1 / 1 / 2 / 2; text-align: right; flex-direction: row-reverse;}
+.tourhelpcard2{grid-area: 1 / 2 / 2 / 3;}
+.tourhelpcard3{grid-area: 2 / 1 / 3 / 2; text-align: right; flex-direction: row-reverse;margin: 0 100px 0 0;}
+.tourhelpcard4{grid-area: 2 / 2 / 3 / 3;margin: 0 0px 0 100px;}
+.tourhelpcard5{grid-area: 3 / 1 / 4 / 2; text-align: right; flex-direction: row-reverse;}
+.tourhelpcard6{grid-area: 3 / 2 / 4 / 3;}
+
+
+
+
+
+
+/*Готовые решения для туризма*/
+
+.ready-made-solutions{
+    background-color:#d5eaff;
+    margin: 0;
+    padding: 0;
+}
+
+.ready-made-solutions>.container{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr)
+}
+
+.ready-made-solutions-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+.ready-made-solutions-card>img{
+    width: 100px;
+    padding: 0 0 15px 0;
+}
+
+.ready-made-solutions-card>a{
+    text-align: center;
+    text-decoration: none;
+    font-family: "BlushesBlack";
+    color:#3b1faa;
+}
+
+.ready-made-solutions>h3, .our-partners>h3{
+    font-size: 50px;
+    text-align: center;
+    margin: 0;
+    padding: 40px 0;
+}
+
+
+
+
+/*наши партнёры*/
+
+.our-partners {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+}   
+
+.partners-carousel-wrapper {
+    position: relative;
+    padding: 0 40px;
+}
+
+.partners-carousel {
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 20px;
+}
+
+.carousel-slide {
+    flex: 0 0 calc(20% - 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.carousel-slide:hover {
+    transform: translateY(0);
+}
+
+.carousel-slide a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.carousel-slide img {
+    max-width: 100%;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0%);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.carousel-slide img {
+    max-width: 100%;
+    max-height: 60px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0%);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.carousel-slide:hover img {
+    filter: grayscale(0%);
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background: #f5f5f5;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.carousel-arrow.prev {
+    left: 0;
+}
+
+.carousel-arrow.next {
+    right: 0;
+}
+
+@media (max-width: 1024px) {
+    .carousel-slide {
+        flex: 0 0 calc(25% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-slide {
+        flex: 0 0 calc(33.333% - 13.333px);
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-slide {
+        flex: 0 0 calc(50% - 10px);
+    }
+    
+    .partners-carousel-wrapper {
+        padding: 0 30px;
+    }
+    
+    .carousel-arrow {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+
+
+
+
+/*подвал*/
+
+footer{
+    background-color:#3b1faa;
+    padding: 30px 50px;
+    color: white;
+    font-family: "Arial";
+}
+
+footer>.container{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+footer>.container>div{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.social, .subscription{
+    text-align: center;
+    padding: 40px 0;
+}
+
+.social>a>img{
+    width: 50px;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.social>.button{
+    background-color:rgba(240, 248, 255, 0.203);
+}
+
+.social>.button:hover{
+    background-color:rgb(255, 218, 176);
+    color:#3b1faa
+}
+
+.subscribe-form {
+    max-width: 300px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+  
+.form-group {
+    margin-bottom: 10px;
+}
+  
+.form-input, .form-button {
+    width: 100%;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+  
+.form-input {
+    background: #fff;
+}
+  
+.form-input:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74,144,226,0.2);
+}
+  
+.form-button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.form-button:hover {
+    background-color: #3a7bc8;
+}
